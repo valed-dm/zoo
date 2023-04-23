@@ -15,10 +15,10 @@ class TestFood(TestCase):
         print("TestFood: Я выполняюсь после каждого теста")
 
     def test_init(self):
-        self.assertEquals(self.food.name, "Банан")
+        self.assertEqual(self.food.name, "Банан")
 
     def test_str(self):
-        self.assertEquals(str(self.food), "Банан")
+        self.assertEqual(str(self.food), "Банан")
 
 
 class TestCategory(TestCase):
@@ -37,7 +37,7 @@ class TestCategory(TestCase):
             food = Food.objects.create(name=name)
             self.category.foods.add(food)
         self.category.save()
-        self.assertEquals(self.category.count_category_foods(), 4)
+        self.assertEqual(self.category.count_category_foods(), 4)
 
     def test_some_error(self):
         with self.assertRaises(ValueError):

@@ -16,10 +16,10 @@ def mock_randint(start, end, *args, **kwargs):
 class TestMath(TestCase):
 
     def test_sqrt(self):
-        self.assertEquals(sqrt(9), 3)
+        self.assertEqual(sqrt(9), 3)
 
     def test_add_to_random(self):
         # заменяем функцию random.randint на контролируемую функцию mock_randint:
         random.randint = mock_randint
         result = add_to_random(10)
-        self.assertEquals(result, 13)
+        self.assertEqual(result, 13)

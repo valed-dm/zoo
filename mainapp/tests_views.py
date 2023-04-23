@@ -12,7 +12,7 @@ class TestViews(TestCase):
     # писать на каждую страницу, показывает, что страница отвечает
     def test_status_code(self):
         response = self.client.get("/")
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     # есть плюсы и минусы - нам нужно знать, показывается ли страница,
     # а сам контекст неважен - решать самостоятельно, нужен ли такой тест или нет
@@ -27,6 +27,6 @@ class TestViews(TestCase):
         animal = Animal.objects.create(name="Борис", category=category)
         response = self.client.get("/")
         # print(response.context)
-        self.assertEquals("animals" in response.context, True)
+        self.assertEqual("animals" in response.context, True)
         self.assertTrue("animals" in response.context)
-        self.assertEquals(response.context["animals"].first().id, animal.id)
+        self.assertEqual(response.context["animals"].first().id, animal.id)
