@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Вы действительно хотите удалить {{ object.name }}?</h1>
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <input class="btn btn-outline-danger" type="submit" value="Да">
+            <a class="btn btn-outline-success" href="/category-list/">Нет</a>
+        </form>
+    </div>
+{% endblock %}

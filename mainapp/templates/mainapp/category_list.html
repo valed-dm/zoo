@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Category list view</h1>
+    <ul class="list-group">
+        {% for item in object_list %}
+            <li class="list-group-item">
+                {% if item.img %}
+                    <img
+                            src="{{ item.img.url }}"
+                            alt="image:{{ item.name }}"
+                            width="50"
+                            height="50"
+                    />
+                {% endif %}
+                <span>
+                    <a href="/category-detail/{{ item.id }}/">
+                        {{ item.name }}
+                    </a>
+                </span>
+                <span class="m-lg-5">
+                    <a
+                            href="/category-update/{{ item.id }}/"
+                            class="btn btn-outline-warning"
+                    >
+                        Обновить
+                </a>
+                </span>
+                <span class="m-lg-5">
+                    <a
+                            href="/category-delete/{{ item.id }}/"
+                            class="btn btn-outline-danger"
+                    >
+                        Удалить
+                </a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="mt-5">
+        <a
+                href="/category-create"
+                class="btn btn-outline-success"
+        >
+            Создать категорию
+        </a>
+    </div>
+    <div>
+        {{ promo }}
+    </div>
+{% endblock %}

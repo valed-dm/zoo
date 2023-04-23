@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Category detailed view</h1>
+    <p>Категория: {{ object.name }}</p>
+    <div>
+        <p>
+            Корма:
+        </p>
+        <ol>
+            {% for food in object.foods.all %}
+                <li>{{ food }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}

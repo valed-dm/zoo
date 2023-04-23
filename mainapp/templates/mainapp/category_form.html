@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {#        {{ form.as_p }}#}
+        <div class="border border-dark-subtle p-3 rounded-2">
+            {% for field in form %}
+                {{ field.label }}
+                {{ field }}
+                {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li class="text-bg-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+            <button class="btn btn-outline-primary">Сохранить</button>
+        </div>
+    </form>
+{% endblock %}
