@@ -60,3 +60,7 @@ class TestViews(TestCase):
         # now we are waiting for response code 200 from user already authorized
         response = self.client.get("/category-list/")
         self.assertEqual(response.status_code, 200)
+
+        self.client.logout()
+        response = self.client.get("/category-list/")
+        self.assertEqual(response.status_code, 302)
