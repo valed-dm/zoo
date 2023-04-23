@@ -31,3 +31,12 @@ class TestViews(TestCase):
         self.assertEqual("animals" in response.context, True)
         self.assertTrue("animals" in response.context)
         self.assertEqual(response.context["animals"].first().id, animal.id)
+
+    def test_content(self):
+        response = self.client.get("/")
+        # print("html content ===>", response.content)
+        user_element = '<button class="btn btn-outline-success" type="submit">Поиск</button>'
+        # response decoding
+        self.assertIn(user_element, response.content.decode(encoding="utf-8"))
+        # user element encoding
+        self.assertIn(user_element.encode(encoding="utf-8"), response.content)
