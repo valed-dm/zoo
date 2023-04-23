@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+from userapp.models import MyUser
 from .models import Animal, Category
 
 
@@ -40,3 +41,22 @@ class TestViews(TestCase):
         self.assertIn(user_element, response.content.decode(encoding="utf-8"))
         # user element encoding
         self.assertIn(user_element.encode(encoding="utf-8"), response.content)
+
+    # user authorization test
+    def test_category_list_auth(self):
+        # this request is sent by an unauthorized user
+        response = self.client.get("/category-list/")
+        self.assertEqual(response.status_code, 302)
+
+        # first, we need a User object with create_user to get hashed user password
+        user = MyUser.objects.create_user(
+            username="auth_user",
+            email="auth@user.com",
+            password="admin12345"
+        )
+        # after this, our user is authorized at a django client side
+        # and all requests are sent from his name
+        self.client.login(username="auth_user", password="admin12345")
+        # now we are waiting for response code 200 from user already authorized
+        response = self.client.get("/category-list/")
+        self.assertEqual(response.status_code, 200)
