@@ -64,3 +64,38 @@ class TestViews(TestCase):
         self.client.logout()
         response = self.client.get("/category-list/")
         self.assertEqual(response.status_code, 302)
+
+    def test_category_create_auth(self):
+        response = self.client.get("/category-create/")
+        self.assertEqual(response.status_code, 302)
+
+        user = MyUser.objects.create_user(
+            username="auth_user",
+            email="auth@user.com",
+            password="admin12345"
+        )
+
+        self.client.login(username="auth_user", password="admin12345")
+
+        # now we authorized as user, but permission must be denied
+        # cause user has no rights to create a category:
+        # res -> Forbidden (Permission denied): /category-create/
+        response = self.client.get("/category-create/")
+        self.assertEqual(response.status_code, 403)
+
+        self.client.logout()
+
+        # user is_staff=True
+        user = MyUser.objects.create_user(
+            username="staff_user",
+            email="staff@user.com",
+            password="admin12345",
+            is_staff=True
+        )
+
+        # permission to create category is granted to this user
+        self.client.login(username="staff_user", password="admin12345")
+
+        response = self.client.get("/category-create/")
+        # now the response code is 200
+        self.assertEqual(response.status_code, 200)
